@@ -1,0 +1,18 @@
+- Clone the repository to your local machine using
+	git clone git@github.com:ETH-NEXUS/Workshop_RDMS_BSSE_retreat.git
+- Navigate to the subdirectory "Workshop_RDMS_BSSE_retreat/docker_tutorial
+- You will find the two main component for a simple docker container
+	- example_plot.R: This is a simple script that we want to run inside a container. It can be any kind of script, workflow of pipeline
+	- Dockerfile: This is the recipe to build the docker image
+- Build the image:
+	docker build -t docker_example .
+- Images can be listed using:
+	docker images
+- Run the container:
+	docker run --volume=</path/to/host/dir>:/output docker_example
+
+The --volume option binds a directory of your system (on the left side of the colon) to a directory in the container (right side of the colon).
+This allows the container to read from and write to that directory, ensuring the output can be retrieved.
+HINT: --volume requires full paths. Change </path/to/host/dir> to the full path to the directory you wish the output to be saved to
+
+
