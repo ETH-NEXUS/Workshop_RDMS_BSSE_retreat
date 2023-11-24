@@ -4,23 +4,21 @@
 ## Other images can be found on dockerHub: https://hub.docker.com
 ##
 ## HINT: Always define a specific version of your operating system and avoid tags such as "latest" to improve reproducibility
-FROM continuumio/miniconda3:23.5.2-0-alpine
+##
+## We use a base image with the Mamba package manager installed (Mamba: https://mamba.readthedocs.io/en/latest/) to facilitate the installation of R and its libraries
+#FROM r-base:4.3.2
+FROM condaforge/miniforge3:23.3.1-1
 
 ## Install system packages if necessary
-RUN apk add lxqt-desktop cairo
+#RUN apt-get update && apt-get install -y curl
+#add lxqt-desktop cairo0
 
-
-## Instruct docker to copy your code into the image that is being built
-## Without absolute paths, docker assumes the origin file to be in the same directory as the Dockerfile
-## The destination can be anywhere inside the container. Directories are created as necessary
-COPY example_plot.R .
-
-## We run conda to install R
-## the option -y is critical, because the building process does not allow interactivity to answer the install questions
-##
-## HINT: Always define a specific version of the software you install to improve reproducibility
-RUN conda install -y -c r r-base=4.2.0
-
+#RUN curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xvj bin/micromamba
+#RUN micromamba shell init --shell bash --root-prefix=~/micromamba && micromamba activate
+## We use "mamba install" to select the packages of interest. Packages can be searched on https://anaconda.org/anaconda/repo
+## HINT: Always define a specific version of your packages to improve reproducibility
+## HINT: User the option "-y" to automatically answer "yes" to the install prompt. The image building process does not allow to answer interactive prompts
+RUN mamba install -y r-base=4.3.2 r-ggplot2=3.4.4 r-argparse=2.2.2
 ## We define the command to run once the container has been built
 ## For more complex instructions we can provide a custom bash script that runs multiple commands
 ## The syntax below shows how to write an entrypoint with a command (Rscript) followed by options (example_plot.R)
@@ -28,4 +26,4 @@ RUN conda install -y -c r r-base=4.2.0
 ## ENTRYPOINT["./example_plot.R"]
 ##
 ## HINT: The whitespace after "ENTRYPOINT" is mandatory
-ENTRYPOINT ["Rscript", "example_plot.R"]
+ENTRYPOINT ["Rscript", "/input/myAnalysis.R", "--input", "/input/input.tsv", "--output", "/output/plot.png" ]
