@@ -2,7 +2,7 @@
 	git clone git@github.com:ETH-NEXUS/Workshop_RDMS_BSSE_retreat.git
 - Navigate to the subdirectory "Workshop_RDMS_BSSE_retreat/docker_tutorial
 - You will find the two main component for a simple docker container
-	- example_plot.R: This is a simple script that we want to run inside a container. It can be any kind of script, workflow of pipeline
+	- myAnalysis.R: This is a simple script that we want to run inside a container. It can be any kind of script, workflow of pipeline
 	- Dockerfile: This is the recipe to build the docker image
 - Build the image:
 	docker build -t myanalysis .
