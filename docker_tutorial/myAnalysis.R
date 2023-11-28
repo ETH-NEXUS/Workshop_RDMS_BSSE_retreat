@@ -19,13 +19,12 @@ require(ggplot2)
 parser <- argparse::ArgumentParser()
 parser$add_argument("--input", type = "character", help = "Input TSV table containing the expression and the subject it belongs to")
 parser$add_argument("--output", type = "character", help = "Path and name for the output plot")
-parser$add_argument("--value_name", type = "character", default = "expression", help = "The name to assign to the values to plot. It must match the column name in the input TSV and it will be used as Y-axis label in the plot")
-parser$add_argument("--category_name", type = "character", default = "subject", help = "The name of the column containing the categories"
 args <- parser$parse_args()
 
 print(args)
 expression <- read.delim(args$input)
-myplot <- ggplot(expression, aes(x=args$value_name, color=args$category_name, fill=args$category_name)) +
+print(is(expression$expression))
+myplot <- ggplot(expression, aes(x=value, color=subject, fill=subject)) +
   geom_histogram(alpha=0.5, position="identity")
 
 ggsave(args$output, myplot, device="png")
