@@ -1,11 +1,11 @@
 ## The FROM statement decides the base image to use
-## We use a lightweight alpine linux with miniconda3 pre-installed
-## https://hub.docker.com/r/continuumio/miniconda3
+## We use the official conda base image
+## https://hub.docker.com/r/continuumio/miniforge3
 ## Other images can be found on dockerHub: https://hub.docker.com
 ##
 ## HINT: Always define a specific version of your operating system and avoid tags such as "latest" to improve reproducibility
 ##
-## We use a base image with the Mamba package manager installed (Mamba: https://mamba.readthedocs.io/en/latest/) to facilitate the installation of R and its libraries
+## We use a base image with the Mamba package manager installed (Mamba: https://mamba.readthedocs.io/en/latest/) to speed up the installation of R and its libraries
 FROM condaforge/miniforge3:23.3.1-1
 
 ## We use "mamba install" to select the packages of interest. Packages can be searched on https://anaconda.org/anaconda/repo
